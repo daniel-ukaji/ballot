@@ -186,7 +186,7 @@ const Draws = () => {
     if (ballotResults?.length === 0) {
       return (
         <div className="flex flex-col justify-center items-center">
-            <Image src={noresult} objectFit="cover" className="w-1/3" />
+            <Image src={noresult} objectFit="cover" alt="" className="w-1/3" />
             <h1 className="font-bold text-2xl">No Ballot Results</h1>
         </div>
       );

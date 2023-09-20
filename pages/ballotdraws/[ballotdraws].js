@@ -47,7 +47,7 @@ const BallotDrawsId = () => {
         }
       }
       runFireworks();
-    }, [ballotdraws]);
+    }, [ballotdraws, fetchData, userToken]); // Include fetchData in the dependency array
 
   return (
     <div>

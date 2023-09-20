@@ -8,7 +8,7 @@ import { useAuth } from '@/services/AuthContext';
 import { useRouter } from 'next/router'
 
 
-function signin() {
+function Signin() {
   const [isLoading, setIsLoading] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -93,4 +93,4 @@ function signin() {
   )
 }
 
-export default signin
+export default Signin
