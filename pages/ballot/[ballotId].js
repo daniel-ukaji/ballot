@@ -328,6 +328,12 @@ function Ballot() {
           <Uploadeds ballotId={ballotId} />
           <Link href={`/draws/${ballotId}`} ><Button>Go to Draws</Button></Link>
         </div>
+
+        <div className='flex items-center space-x-32'>
+          <Link href={`/plots/${ballotId}`} ><Button>See all Plots</Button></Link>
+          <Link href={`/subscribers/${ballotId}`} ><Button>See all Subscribers</Button></Link>
+        </div>
+
       </div>
     </div>
   )
