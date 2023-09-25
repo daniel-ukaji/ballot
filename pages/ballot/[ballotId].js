@@ -1,6 +1,6 @@
 import Navbar from '@/components/Navbar'
 import { Button, buttonVariants } from '@/components/ui/button'
-import { Download, HomeIcon, Landmark, Loader2, Upload, UserCheck } from 'lucide-react'
+import { Container, Download, HomeIcon, Landmark, Loader2, Upload, UserCheck } from 'lucide-react'
 import Link from 'next/link'
 import React, { useEffect, useState } from 'react'
 import Uploaded from '@/pages/uploaded'
@@ -326,10 +326,74 @@ function Ballot() {
         <div className='flex items-center space-x-32'>
           <Uploaded ballotId={ballotId} />
           <Uploadeds ballotId={ballotId} />
-          <Link href={`/draws/${ballotId}`} ><Button>Go to Draws</Button></Link>
+          <div className='overflow-hidden h-fit rounded-lg border border-gray-200 order-first md:order-last'>
+            <div className='bg-emerald-100 px-6 py-4'>
+              <p className='font-semibold py-3 flex items-center gap-1.5'>
+                <Container className='w-4 h-4' />
+                Go to Draws
+              </p>
+            </div>
+
+            <div className='-my-3 divide-y divide-gray-100 px-6 py-4 text-sm leading-6'>
+              <div className='flex justify-between gap-x-4 py-3'>
+                <p className='text-zinc-500'>
+                  The button below will take you to the page for the Draws
+                </p>
+              </div>
+
+              <Link className={buttonVariants({
+                className: 'w-full mt-4 mb-6'
+              })} href={`/draws/${ballotId}`}>Go to Draws</Link>
+            </div>
+          </div>
+          {/* <Link href={`/draws/${ballotId}`} ><Button>Go to Draws</Button></Link> */}
         </div>
 
         <div className='flex items-center space-x-32'>
+
+          {/* See all Plots */}
+        {/* <div className='overflow-hidden h-fit rounded-lg border border-gray-200 order-first md:order-last'>
+            <div className='bg-emerald-100 px-6 py-4'>
+              <p className='font-semibold py-3 flex items-center gap-1.5'>
+                <Container className='w-4 h-4' />
+                See all Plots
+              </p>
+            </div>
+
+            <div className='-my-3 divide-y divide-gray-100 px-6 py-4 text-sm leading-6'>
+              <div className='flex justify-between gap-x-4 py-3'>
+                <p className='text-zinc-500'>
+                  The button below will take you to the page to see all uploaded plots
+                </p>
+              </div>
+
+              <Link className={buttonVariants({
+                className: 'w-full mt-4 mb-6'
+              })} href={`/plots/${ballotId}`}>See all Plots</Link>
+            </div>
+          </div> */}
+
+          {/* See all Subscribers */}
+        {/* <div className='overflow-hidden h-fit rounded-lg border border-gray-200 order-first md:order-last'>
+            <div className='bg-emerald-100 px-6 py-4'>
+              <p className='font-semibold py-3 flex items-center gap-1.5'>
+                <Container className='w-4 h-4' />
+                See all Subscribers
+              </p>
+            </div>
+
+            <div className='-my-3 divide-y divide-gray-100 px-6 py-4 text-sm leading-6'>
+              <div className='flex justify-between gap-x-4 py-3'>
+                <p className='text-zinc-500'>
+                  The button below will take you to the page to see all uploaded subscribers
+                </p>
+              </div>
+
+              <Link className={buttonVariants({
+                className: 'w-full mt-4 mb-6'
+              })} href={`/subscribers/${ballotId}`}>See all Subscribers</Link>
+            </div>
+          </div> */}
           <Link href={`/plots/${ballotId}`} ><Button>See all Plots</Button></Link>
           <Link href={`/subscribers/${ballotId}`} ><Button>See all Subscribers</Button></Link>
         </div>
