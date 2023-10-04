@@ -51,9 +51,6 @@ function Uploaded({ ballotId }) {
     };
   };
   
-  
-  
-
   const submitDataToAPI = () => {
     if (!userToken) {
       // User is not logged in, show a toast notification
