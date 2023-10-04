@@ -21,6 +21,8 @@ import axios from "axios";
 import { useAuth } from '@/services/AuthContext'
 import { useToast } from '@/components/ui/use-toast'
 import { useRouter } from 'next/router'
+import * as XLSX from "xlsx";
+
 
 
 function Ballot() {
@@ -137,6 +139,25 @@ function Ballot() {
     }
   };
 
+  const handleExportExcel = () => {
+        
+    // Replace this with your hardcoded data
+const customData = [
+['Plot Name', 'Subscriber Name'],
+['Charles Osegbue', '123456'],
+['Daniel Ukaji', '246810'],
+// Add more rows as needed
+];
+
+    const wb = XLSX.utils.book_new();
+    const ws = XLSX.utils.aoa_to_sheet(customData);
+    XLSX.utils.book_append_sheet(wb, ws, 'Sample Data');
+
+    XLSX.writeFile(wb, 'Sample.xlsx');
+
+  };
+
+
   return (
     <div>
       <Navbar />
@@ -162,9 +183,7 @@ function Ballot() {
                 </p>
               </div>
 
-              <Link className={buttonVariants({
-                className: 'w-full mt-4 mb-6'
-              })} href='https://drive.google.com/file/d/1NKNGz1-QuDxyQu546ZxpuT8kFXIRuFFL/view?usp=drive_link'>Download</Link>
+              <Button onClick={handleExportExcel} className="w-full mt-4 mb-6">Download</Button>
             </div>
           </div>
 
