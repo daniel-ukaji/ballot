@@ -18,8 +18,11 @@ const Draws = () => {
   const [isFetching, setIsFetching] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
+  console.log(user?.email)
   const router = useRouter();
   const { drawsId } = router.query;
+
+  const userEmail = user?.email
 
   const itemsPerPage = 10;
 
@@ -41,7 +44,7 @@ const Draws = () => {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            email: "chevroncemcs@outlook.com",
+            email: userEmail,
             ballotId: drawsId,
           }),
         }
@@ -82,7 +85,7 @@ const Draws = () => {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            email: "chevroncemcs@outlook.com",
+            email: userEmail,
             ballotId: drawsId,
           }),
         }
@@ -183,7 +186,7 @@ const Draws = () => {
               </thead>
               <tbody className="bg-white divide-y divide-gray-200">
                 {ballotResults
-                  .slice(
+                  ?.slice(
                     currentPage * itemsPerPage,
                     (currentPage + 1) * itemsPerPage
                   )

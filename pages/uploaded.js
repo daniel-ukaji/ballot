@@ -15,8 +15,11 @@ function Uploaded({ ballotId }) {
   const [data, setData] = useState([]);
   const [jsonData, setJsonData] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  console.log(user?.email)
 
   const userToken = user?.token;
+
+  const userEmail = user?.email
 
   console.log(userToken);
 
@@ -28,17 +31,28 @@ function Uploaded({ ballotId }) {
       const workbook = XLSX.read(data, { type: "binary" });
       const sheetName = workbook.SheetNames[0];
       const sheet = workbook.Sheets[sheetName];
-      const parsedData = XLSX.utils.sheet_to_json(sheet);
-      setData(parsedData);
-
+  
+      // Convert the sheet to JSON
+      const parsedData = XLSX.utils.sheet_to_json(sheet, { header: 1 });
+  
+      // Filter out rows where the first column is "0"
+      const dataRows = parsedData.slice(1).filter((row) => row[0] !== "0");
+      console.log("Filtered dataRows:", dataRows);
+      setData(dataRows);
+        
+      setData(dataRows);
+  
       const apiData = {
-        email: "chevroncemcs@outlook.com",
-        data: parsedData.map((row) => row["Plots"]), // Replace "ColumnName" with the actual column name containing the plot data
+        email: userEmail,
+        data: dataRows.map((row) => row[0]), // Assuming the first column contains the data
         ballotId: ballotId, // Include the 'ballotId' in your payload
       };
       setJsonData(apiData);
     };
   };
+  
+  
+  
 
   const submitDataToAPI = () => {
     if (!userToken) {

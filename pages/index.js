@@ -44,11 +44,13 @@ export default function Home() {
   const [createBallot, setCreateBallot] = useState("");
   const [isLoading, setIsLoading] = useState(true);
   const [ballotData, setBallotData] = useState([]); // Store the fetched data in state
+  console.log(user?.email)
+  
   const router = useRouter();
 
   const userToken = user?.token;
 
-  const userEmail = "chevroncemcs@outlook.com";
+  const userEmail = user?.email;
 
   useEffect(() => {
     const fetchData = async () => {
@@ -72,7 +74,7 @@ export default function Home() {
     setIsLoading(true);
 
     const requestData = {
-      email: 'chevroncemcs@outlook.com',
+      email: userEmail,
       name: createBallot,
     };
 

@@ -30,10 +30,10 @@ function Signin() {
   };
 
   // Check if the user is authenticated and redirect if already logged in
-  if (user) {
-    router.push('/');
-    return null; // Redirecting, no need to render anything
-  }
+  // if (user) {
+  //   router.push('/');
+  //   return null; // Redirecting, no need to render anything
+  // }
 
 
 
