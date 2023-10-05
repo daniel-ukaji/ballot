@@ -16,6 +16,7 @@ function Plots() {
   const { plotId } = router.query;
 
   const userToken = user?.token;
+  const userEmail = user?.email;
 
   useEffect(() => {
     if (plotId) {
@@ -27,7 +28,7 @@ function Plots() {
     setIsLoading(true);
 
     const requestData = {
-      email: "chevroncemcs@outlook.com",
+      email: userEmail,
       ballotId: plotId,
     };
 

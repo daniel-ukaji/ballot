@@ -27,7 +27,7 @@ function Signin() {
     } finally {
       setIsLoading(false);
     }
-  };
+  }; 
 
   // Check if the user is authenticated and redirect if already logged in
   // if (user) {
