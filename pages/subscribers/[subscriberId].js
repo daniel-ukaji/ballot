@@ -15,6 +15,8 @@ function Subscribers() {
   const router = useRouter();
   const { subscriberId } = router.query;
 
+  const userEmail = user?.email;
+
   const userToken = user?.token;
 
   useEffect(() => {
@@ -27,7 +29,7 @@ function Subscribers() {
     setIsLoading(true);
 
     const requestData = {
-      email: "chevroncemcs@outlook.com",
+      email: userEmail,
       ballotId: subscriberId,
     };
 

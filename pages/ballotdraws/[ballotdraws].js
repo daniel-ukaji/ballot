@@ -14,7 +14,7 @@ const BallotDrawsId = () => {
     const { ballotdraws } = router.query;
   
     const userToken = user?.token;
-    const userEmail = "chevroncemcs@outlook.com";
+    const userEmail = user?.email;
   
     // Function to fetch data
     const fetchData = async (ballotId) => {

@@ -34,6 +34,8 @@ function Uploads() {
   const userToken = user?.token;
   console.log(userToken)
 
+  const userEmail = user?.email;
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -43,7 +45,7 @@ function Uploads() {
 
     // Prepare the request payload
     const requestData = {
-      email: 'chevroncemcs@outlook.com',
+      email: userEmail,
       name: plotName,
     };
 
@@ -89,7 +91,7 @@ function Uploads() {
 
     // Prepare the request payload
     const requestData = {
-      email: 'chevroncemcs@outlook.com',
+      email: userEmail,
       name: subscriber,
     };
 

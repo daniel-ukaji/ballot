@@ -39,6 +39,7 @@ function Ballot() {
   console.log('Extracted ID:', ballotId); // Log the extracted ID to the console
 
 
+  const userEmail = user?.email;
 
 
   const userToken = user?.token;
@@ -53,7 +54,7 @@ function Ballot() {
 
     // Prepare the request payload
     const requestData = {
-      email: 'chevroncemcs@outlook.com',
+      email: userEmail,
       ballotId,
       name: plotName,
     };
@@ -100,7 +101,7 @@ function Ballot() {
 
     // Prepare the request payload
     const requestData = {
-      email: 'chevroncemcs@outlook.com',
+      email: userEmail,
       ballotId,
       name: subscriber,
     };
