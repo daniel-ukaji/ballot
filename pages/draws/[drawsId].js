@@ -18,11 +18,11 @@ const Draws = () => {
   const [isFetching, setIsFetching] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
-  console.log(user?.email)
+  console.log(user?.email);
   const router = useRouter();
   const { drawsId } = router.query;
 
-  const userEmail = user?.email
+  const userEmail = user?.email;
 
   const itemsPerPage = 10;
 
@@ -30,6 +30,15 @@ const Draws = () => {
 
   const handlePageChange = ({ selected }) => {
     setCurrentPage(selected);
+  };
+
+  // Function to save data to local storage
+  const saveToLocalStorage = (key, data) => {
+    try {
+      localStorage.setItem(key, JSON.stringify(data));
+    } catch (error) {
+      console.error("Error saving to local storage:", error);
+    }
   };
 
   const fetchData = async () => {
@@ -52,12 +61,14 @@ const Draws = () => {
 
       if (response.ok) {
         const data = await response.json();
-        console.log(data.data);
         setBallotResults(data.data);
         toast({
           title: "Success!!",
           description: "The Ballot has been drawn!.",
         });
+
+        // Save the results to local storage
+        saveToLocalStorage(`ballotResults_${drawsId}`, data.data);
       } else {
         console.error("Failed to fetch data");
       }
@@ -97,6 +108,10 @@ const Draws = () => {
           title: "Success!!",
           description: "The Ballot has been Cleared!.",
         });
+        console.log(response);
+        
+        // Clear the data from local storage
+        localStorage.removeItem(`ballotResults_${drawsId}`);
       } else {
         console.error("Failed to delete ballot");
       }
@@ -160,7 +175,6 @@ const Draws = () => {
           <Button onClick={handleClearDrawButtonClick} disabled={isLoading}>
             {isLoading ? "Clearing Draw..." : "Clear Draw"}
           </Button>
-
         </div>
 
         {ballotResults?.length === 0 ? (
@@ -171,8 +185,8 @@ const Draws = () => {
         ) : (
           <div>
             <Button className="mb-5" onClick={handleExportExcel} disabled={isLoading}>
-            {isLoading ? "Exporting Excel..." : "Export Excel File"}
-          </Button>
+              {isLoading ? "Exporting Excel..." : "Export Excel File"}
+            </Button>
             <table className="min-w-full divide-y divide-gray-200 mb-10">
               <thead className="bg-gray-50">
                 <tr>
@@ -198,7 +212,6 @@ const Draws = () => {
                   ))}
               </tbody>
             </table>
-
           </div>
         )}
       </div>
