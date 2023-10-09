@@ -60,7 +60,7 @@ export default function Home() {
         console.log(responseData)
         setIsLoading(false);
       } catch (error) {
-        console.error('Error fetching ballot data:', error);
+        console.error('Error fetching ballot data:', error); 
         setIsLoading(false);
       }
     };
