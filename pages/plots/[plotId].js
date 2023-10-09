@@ -5,6 +5,7 @@ import { useAuth } from "@/services/AuthContext";
 import { useToast } from "@/components/ui/use-toast";
 import { useRouter } from "next/router";
 import { Loader2 } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 function Plots() {
   const { user } = useAuth();
@@ -54,11 +55,63 @@ function Plots() {
     }
   };
 
+  const handleDelete = async () => {
+    setIsLoading(true);
+
+    const requestData = {
+      email: userEmail,
+      ballotId: plotId,
+    };
+
+    try {
+      const response = await axios.delete(
+        "https://virtual.chevroncemcs.com/ballot/plot",
+        {
+          headers: {
+            Authorization: `Bearer ${userToken}`,
+            "Content-Type": "application/json",
+          },
+          data: requestData, // Include your request body here
+        }
+      );
+
+      // Handle the response data if needed
+      console.log(response.data);
+
+      toast({
+        title: 'Success!!',
+        description: 'The Subscribers has been cleared!.',
+      });
+      // Show a toast message for successful deletion
+      // toast.success("Plot list has been cleared successfully!");
+      window.location.reload();
+
+    } catch (error) {
+      console.error("Error deleting plot data:", error);
+      // Handle error and show a toast message for failure
+      // toast.error("Failed to clear plot list.");
+      toast({
+        title: 'There was a problem.',
+        description: 'There was an error clearing the subscribers',
+        variant: 'destructive',
+      });
+    } finally {
+      setIsLoading(false);
+    }
+  }
+
   return (
     <div>
       <Navbar />
       <div className="max-w-6xl mx-auto mt-20">
-        <h1 className="text-3xl font-semibold mb-4">Plot Data</h1>
+        <div className="flex justify-between items-center mb-2">
+          <h1 className="text-3xl font-semibold mb-4">Plot Data</h1>
+          <Button
+          onClick={handleDelete}
+        >
+          Delete Plots
+        </Button>
+        </div>
         {isLoading ? (
             <div className='flex justify-center items-center'>
                 <Loader2 className="mr-2 h-10 w-10 animate-spin" />

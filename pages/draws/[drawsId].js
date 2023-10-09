@@ -18,14 +18,14 @@ const Draws = () => {
   const [isFetching, setIsFetching] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
+  const [itemsPerPage, setItemsPerPage] = useState(10); // State for items per page
   console.log(user?.email);
   const router = useRouter();
   const { drawsId } = router.query;
 
   const userEmail = user?.email;
 
-  const itemsPerPage = 10;
-
+  // Calculate page count based on items per page
   const pageCount = Math.ceil(ballotResults?.length / itemsPerPage);
 
   const handlePageChange = ({ selected }) => {
@@ -109,7 +109,7 @@ const Draws = () => {
           description: "The Ballot has been Cleared!.",
         });
         console.log(response);
-        
+
         // Clear the data from local storage
         localStorage.removeItem(`ballotResults_${drawsId}`);
       } else {
@@ -161,6 +161,13 @@ const Draws = () => {
     setIsLoading(false);
   };
 
+  // Function to handle user's selection of items per page
+  const handleItemsPerPageChange = (e) => {
+    const newItemsPerPage = parseInt(e.target.value, 10);
+    setItemsPerPage(newItemsPerPage);
+    setCurrentPage(0); // Reset to the first page when changing items per page
+  };
+
   return (
     <div>
       <Navbar />
@@ -168,10 +175,10 @@ const Draws = () => {
         <h1 className="text-3xl font-semibold mb-4 mt-20">Ballot Results</h1>
 
         <div className="flex justify-between mb-5">
+          
           <Button onClick={fetchData} disabled={isFetching || isLoading}>
             {isFetching ? "Drawing..." : "Draw"}
           </Button>
-
           <Button onClick={handleClearDrawButtonClick} disabled={isLoading}>
             {isLoading ? "Clearing Draw..." : "Clear Draw"}
           </Button>
@@ -184,9 +191,29 @@ const Draws = () => {
           </div>
         ) : (
           <div>
-            <Button className="mb-5" onClick={handleExportExcel} disabled={isLoading}>
-              {isLoading ? "Exporting Excel..." : "Export Excel File"}
-            </Button>
+
+            <div className="flex justify-between items-center">
+              <Button className="mb-5" onClick={handleExportExcel} disabled={isLoading}>
+                {isLoading ? "Exporting Excel..." : "Export Excel File"}
+              </Button>
+              <div>
+            <label htmlFor="itemsPerPage" className="mr-2">
+              Draws per page:
+            </label>
+            <select
+              id="itemsPerPage"
+              onChange={handleItemsPerPageChange}
+              value={itemsPerPage}
+            >
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="5">5</option>
+              <option value="10">10</option>
+              {/* Add more options as needed */}
+            </select>
+          </div>
+            </div>
+            
             <table className="min-w-full divide-y divide-gray-200 mb-10">
               <thead className="bg-gray-50">
                 <tr>
