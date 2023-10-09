@@ -200,7 +200,7 @@ const Draws = () => {
       )}
       <Navbar />
       <div className="max-w-6xl mx-auto">
-        <h1 className="text-3xl font-semibold mb-4 mt-20">Ballot Results</h1>
+        <h1 className="text-3xl font-semibold mb-4 mt-20">Ballot Result</h1>
 
         <div className="flex justify-between mb-5">
           <Button onClick={fetchData} disabled={isFetching || isLoading}>
