@@ -23,31 +23,29 @@ const BallotDraws = () => {
       "Authorization": `Bearer ${userToken}`,
       "Content-Type": "application/json",
     };
-
+  
     // Make the GET request to the API endpoint with the request body and headers
     axios
       .get("https://virtual.chevroncemcs.com/ballot/draws", {
-        // params: requestBody,
         headers: {
           'Content-Type': 'application/json',
-          "Authorization": `Bearer ${userToken}`, // Pass the userToken as an argument
+          "Authorization": `Bearer ${userToken}`,
         },
         params: {
           email: "chevroncemcs@outlook.com",
-          // ballotId: 
         },
-      },
-      )
+      })
       .then((response) => {
         console.log(response.data);
-        setData(response.data.data); // Access the "data" property in the response
+        setData(response.data.data);
         setLoading(false);
       })
       .catch((error) => {
         console.error("Error fetching data:", error);
         setLoading(false);
       });
-  }, []);
+  }, [userToken]); // Include userToken in the dependency array
+  
 
   return (
     <div>

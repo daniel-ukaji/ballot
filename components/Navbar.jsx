@@ -1,18 +1,13 @@
 import Link from 'next/link'
 import React from 'react'
 // import { Icons } from './Icons'
-import { Button, buttonVariants } from '@/components/ui/button'
-import { useAuth } from '@/services/AuthContext';
+import { Button, buttonVariants } from '../components/ui/button'
+import { useAuth } from '../services/AuthContext';
 // import { getAuthSession } from '@/lib/auth'
 // import UserAccountNav from './UserAccountNav'
 import { Moon, Sun } from "lucide-react"
 import { useTheme } from "next-themes"
- import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
+ 
 
 function Navbar() {
   const { user, logout } = useAuth();
