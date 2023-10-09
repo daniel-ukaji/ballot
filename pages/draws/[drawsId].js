@@ -41,48 +41,100 @@ const Draws = () => {
     }
   };
 
-  const fetchData = async () => {
-    try {
-      setIsFetching(true);
-      const response = await fetch(
-        "https://virtual.chevroncemcs.com/ballot/draws",
-        {
-          method: "POST",
-          headers: {
-            Authorization: `Bearer ${userToken}`,
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            email: userEmail,
-            ballotId: drawsId,
-          }),
+  const fetchDataWithDelay = async () => {
+    setIsFetching(true);
+    setShowFullPageSpinner(true); // Show the full-page spinner when fetching data
+
+    // Delay the data fetching by, for example, 2 seconds (you can adjust the delay duration as needed)
+    setTimeout(async () => {
+      try {
+        const response = await fetch(
+          "https://virtual.chevroncemcs.com/ballot/draws",
+          {
+            method: "POST",
+            headers: {
+              Authorization: `Bearer ${userToken}`,
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              email: userEmail,
+              ballotId: drawsId,
+            }),
+          }
+        );
+
+        if (response.ok) {
+          const data = await response.json();
+          setBallotResults(data.data);
+          toast({
+            title: "Success!!",
+            description: "The Ballot has been drawn!.",
+          });
+
+          // Save the results to local storage
+          saveToLocalStorage(`ballotResults_${drawsId}`, data.data);
+        } else {
+          console.error("Failed to fetch data");
         }
-      );
-
-      if (response.ok) {
-        const data = await response.json();
-        setBallotResults(data.data);
+      } catch (error) {
+        console.error("Error fetching data:", error);
         toast({
-          title: "Success!!",
-          description: "The Ballot has been drawn!.",
+          title: "There was a problem.",
+          description: "There was an error drawing the ballot!",
+          variant: "destructive",
         });
-
-        // Save the results to local storage
-        saveToLocalStorage(`ballotResults_${drawsId}`, data.data);
-      } else {
-        console.error("Failed to fetch data");
+      } finally {
+        setIsFetching(false);
+        setShowFullPageSpinner(false); // Hide the full-page spinner when data fetching is complete
       }
-    } catch (error) {
-      console.error("Error fetching data:", error);
-      toast({
-        title: "There was a problem.",
-        description: "There was an error drawing the ballot!",
-        variant: "destructive",
-      });
-    } finally {
-      setIsFetching(false);
-    }
+    }, 9000); // 2-second delay (adjust the duration as needed)
   };
+
+  // const fetchData = async () => {
+  //   try {
+  //     setIsFetching(true);
+  //     setShowFullPageSpinner(true); // Show the full-page spinner when fetching data
+
+  //     const response = await fetch(
+  //       "https://virtual.chevroncemcs.com/ballot/draws",
+  //       {
+  //         method: "POST",
+  //         headers: {
+  //           Authorization: `Bearer ${userToken}`,
+  //           "Content-Type": "application/json",
+  //         },
+  //         body: JSON.stringify({
+  //           email: userEmail,
+  //           ballotId: drawsId,
+  //         }),
+  //       }
+  //     );
+
+  //     if (response.ok) {
+  //       const data = await response.json();
+  //       setBallotResults(data.data);
+  //       toast({
+  //         title: "Success!!",
+  //         description: "The Ballot has been drawn!.",
+  //       });
+
+  //       // Save the results to local storage
+  //       saveToLocalStorage(`ballotResults_${drawsId}`, data.data);
+  //     } else {
+  //       console.error("Failed to fetch data");
+  //     }
+  //   } catch (error) {
+  //     console.error("Error fetching data:", error);
+  //     toast({
+  //       title: "There was a problem.",
+  //       description: "There was an error drawing the ballot!",
+  //       variant: "destructive",
+  //     });
+  //   } finally {
+  //     setIsFetching(false);
+  //     setShowFullPageSpinner(false); // Hide the full-page spinner when data fetching is complete
+  //   }
+  // };
 
   const handleClearDrawButtonClick = async () => {
     try {
@@ -203,7 +255,7 @@ const Draws = () => {
         <h1 className="text-3xl font-semibold mb-4 mt-20">Ballot Result</h1>
 
         <div className="flex justify-between mb-5">
-          <Button onClick={fetchData} disabled={isFetching || isLoading}>
+          <Button onClick={fetchDataWithDelay} disabled={isFetching || isLoading}>
             {isFetching ? "Drawing..." : "Draw"}
           </Button>
           <Button onClick={handleClearDrawButtonClick} disabled={isLoading}>
