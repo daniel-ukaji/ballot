@@ -51,8 +51,15 @@ export default function Home() {
   const userToken = user?.token;
 
   const userEmail = user?.email;
+  
 
   useEffect(() => {
+    // Redirect to signin page if user is not logged in
+  if (!user) {
+    router.push('/signin'); // Replace '/signin' with the actual URL of your signin page
+    return;
+  }
+
     const fetchData = async () => {
       try {
         const responseData = await fetchBallotData(userEmail, user?.token);
@@ -66,7 +73,7 @@ export default function Home() {
     };
 
     fetchData();
-  }, [user, userEmail]);
+  }, [user, userEmail, router]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();

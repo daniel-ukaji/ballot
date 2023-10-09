@@ -9,15 +9,19 @@ export function AuthProvider({ children }) {
   const router = useRouter();
 
   useEffect(() => {
-    // Check if the user is authenticated using a token stored in cookies or localStorage
+    // Check if the user is authenticated using a token stored in localStorage
     const token = localStorage.getItem('token');
-    const email = localStorage.getItem('email'); // Added to retrieve the stored email
-
+    const email = localStorage.getItem('email'); // Retrieve the stored email
+  
     if (token && email) {
-      // You can also validate the token on the server for added security
+      // User is authenticated, set the user state
       setUser({ email, token });
+    } else {
+      // User is not authenticated, redirect to the signin page
+      router.push('/signin');
     }
-  }, []);
+  }, [router]);
+  
 
   const login = async (email, password) => {
     // Make a POST request to your authentication API
