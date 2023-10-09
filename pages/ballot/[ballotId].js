@@ -141,22 +141,34 @@ function Ballot() {
   };
 
   const handleExportExcel = () => {
-        
-    // Replace this with your hardcoded data
-const customData = [
-['Plot Name', 'Subscriber Name'],
-['Charles Osegbue', '123456'],
-['Daniel Ukaji', '246810'],
-// Add more rows as needed
-];
-
-    const wb = XLSX.utils.book_new();
-    const ws = XLSX.utils.aoa_to_sheet(customData);
-    XLSX.utils.book_append_sheet(wb, ws, 'Sample Data');
-
-    XLSX.writeFile(wb, 'Sample.xlsx');
-
+    // Replace this with your hardcoded data for two separate Excel files
+    const customData1 = [
+      ['Plot Name'],
+      ['Charles Osegbue'],
+      ['Daniel Ukaji'],
+      // Add more rows for the first Excel file as needed
+    ];
+  
+    const customData2 = [
+      ['Subscriber'],
+      ['John Doe'],
+      ['Jane Smith'],
+      // Add more rows for the second Excel file as needed
+    ];
+  
+    // Create a workbook for the first Excel file
+    const wb1 = XLSX.utils.book_new();
+    const ws1 = XLSX.utils.aoa_to_sheet(customData1);
+    XLSX.utils.book_append_sheet(wb1, ws1, 'Plot Data');
+    XLSX.writeFile(wb1, 'PlotData.xlsx');
+  
+    // Create a workbook for the second Excel file
+    const wb2 = XLSX.utils.book_new();
+    const ws2 = XLSX.utils.aoa_to_sheet(customData2);
+    XLSX.utils.book_append_sheet(wb2, ws2, 'Subscriber Data');
+    XLSX.writeFile(wb2, 'SubscriberData.xlsx');
   };
+  
 
 
   return (

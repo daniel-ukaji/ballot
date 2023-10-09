@@ -8,6 +8,7 @@ import { useRouter } from "next/router";
 import Image from "next/image";
 import noresult from "@/public/noresult.png";
 import ReactPaginate from "react-paginate";
+import { PacmanLoader } from 'react-spinners';
 import * as XLSX from "xlsx";
 
 const Draws = () => {
@@ -18,7 +19,10 @@ const Draws = () => {
   const [isFetching, setIsFetching] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
-  const [itemsPerPage, setItemsPerPage] = useState(10); // State for items per page
+  const [itemsPerPage, setItemsPerPage] = useState(5); // Display 5 results per page
+  const [showSpinner, setShowSpinner] = useState(false); // Controls the spinner
+  const [showFullPageSpinner, setShowFullPageSpinner] = useState(false); // Controls the full-page spinner
+
   console.log(user?.email);
   const router = useRouter();
   const { drawsId } = router.query;
@@ -27,10 +31,6 @@ const Draws = () => {
 
   // Calculate page count based on items per page
   const pageCount = Math.ceil(ballotResults?.length / itemsPerPage);
-
-  const handlePageChange = ({ selected }) => {
-    setCurrentPage(selected);
-  };
 
   // Function to save data to local storage
   const saveToLocalStorage = (key, data) => {
@@ -168,14 +168,41 @@ const Draws = () => {
     setCurrentPage(0); // Reset to the first page when changing items per page
   };
 
+  const handlePageChange = ({ selected }) => {
+    setCurrentPage(selected);
+  };
+  
+
+  // Function to handle "Next" button click
+  const handleNextButtonClick = () => {
+    setShowSpinner(true); // Show the spinner within the table
+    setShowFullPageSpinner(true); // Show the full-page spinner
+    setTimeout(() => {
+      setCurrentPage((prevPage) => prevPage + 1); // Move to the next page
+      setShowSpinner(false); // Hide the spinner within the table
+      setShowFullPageSpinner(false); // Hide the full-page spinner
+    }, 5000);
+  };
+
+  // Function to handle "Previous" button click
+  const handlePrevButtonClick = () => {
+    setCurrentPage((prevPage) => prevPage - 1); // Move to the previous page
+  };
+
   return (
     <div>
+      {/* Full-page spinner overlay */}
+      {showFullPageSpinner && (
+        <div className="fixed top-0 left-0 w-screen h-screen flex flex-col justify-center items-center bg-white opacity-100 z-50">
+          {/* <h1 className="font-bold text-3xl">Ballot is Loading...</h1> */}
+          <PacmanLoader size={50} color="#272E3F" />
+        </div>
+      )}
       <Navbar />
       <div className="max-w-6xl mx-auto">
         <h1 className="text-3xl font-semibold mb-4 mt-20">Ballot Results</h1>
 
         <div className="flex justify-between mb-5">
-          
           <Button onClick={fetchData} disabled={isFetching || isLoading}>
             {isFetching ? "Drawing..." : "Draw"}
           </Button>
@@ -191,29 +218,28 @@ const Draws = () => {
           </div>
         ) : (
           <div>
-
             <div className="flex justify-between items-center">
               <Button className="mb-5" onClick={handleExportExcel} disabled={isLoading}>
                 {isLoading ? "Exporting Excel..." : "Export Excel File"}
               </Button>
               <div>
-            <label htmlFor="itemsPerPage" className="mr-2">
-              Draws per page:
-            </label>
-            <select
-              id="itemsPerPage"
-              onChange={handleItemsPerPageChange}
-              value={itemsPerPage}
-            >
-              <option value="1">1</option>
-              <option value="2">2</option>
-              <option value="5">5</option>
-              <option value="10">10</option>
-              {/* Add more options as needed */}
-            </select>
-          </div>
+                <label htmlFor="itemsPerPage" className="mr-2">
+                  Draws per page:
+                </label>
+                <select
+                  id="itemsPerPage"
+                  onChange={handleItemsPerPageChange}
+                  value={itemsPerPage}
+                >
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="5">5</option>
+                  <option value="10">10</option>
+                  {/* Add more options as needed */}
+                </select>
+              </div>
             </div>
-            
+
             <table className="min-w-full divide-y divide-gray-200 mb-10">
               <thead className="bg-gray-50">
                 <tr>
@@ -239,11 +265,31 @@ const Draws = () => {
                   ))}
               </tbody>
             </table>
+
+            {/* "Next" and "Previous" buttons */}
+            <div className="flex justify-between">
+              {currentPage > 0 && (
+                <Button onClick={handlePrevButtonClick}>Previous</Button>
+              )}
+              {currentPage < pageCount - 1 && (
+                <Button onClick={handleNextButtonClick}>
+                  {showSpinner ? (
+                    <>
+                      <span className="mr-2">Loading...</span>
+                      <Loader2 className="h-4 w-4 animate-spin" />
+                    </>
+                  ) : (
+                    "Next"
+                  )}
+                </Button>
+              )}
+            </div>
           </div>
         )}
       </div>
-      <div className="mt-4 mb-10">
-        <ReactPaginate
+
+      <div className="mt-4 mb-10 hidden">
+      <ReactPaginate
           pageCount={pageCount}
           pageRangeDisplayed={5}
           marginPagesDisplayed={2}
