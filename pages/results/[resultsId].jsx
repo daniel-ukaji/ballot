@@ -13,7 +13,7 @@ import ReactPaginate from "react-paginate";
 import { PacmanLoader } from 'react-spinners';
 import * as XLSX from "xlsx";
 
-const Draws = () => {
+const Results = () => {
   const { user } = useAuth();
   const { toast } = useToast();
   const [ballotResults, setBallotResults] = useState([]);
@@ -35,11 +35,7 @@ const Draws = () => {
   const pageCount = Math.ceil(ballotResults?.length / itemsPerPage);
 
   const handleShowAllResultsClick = () => {
-    // Pass the ballotResults data to the new page using query params
-    router.push({
-      pathname: "/all-results",
-      query: { ballotResults: JSON.stringify(ballotResults) },
-    });
+    router.push("/all-results");
   };
 
 
@@ -352,7 +348,7 @@ const Draws = () => {
         <Button
           className="bg-[#2187C0]"
           onClick={handleShowAllResultsClick}
-          // disabled={isLoading || isFetching}
+          disabled={isLoading || isFetching}
         >
           Show All Results
         </Button>
@@ -379,4 +375,4 @@ const Draws = () => {
   );
 };
 
-export default Draws;
+export default Results;

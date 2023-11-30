@@ -95,17 +95,17 @@ function Ballot() {
 
   const handleSubscriberSubmit = async (e) => {
     e.preventDefault();
-
+  
     // Start loading
     setIsLoading(true);
-
+  
     // Prepare the request payload
     const requestData = {
       email: userEmail,
       ballotId,
       name: subscriber,
     };
-
+  
     try {
       // Make a POST request to the API endpoint with the user's token
       const response = await axios.post(
@@ -118,27 +118,39 @@ function Ballot() {
           },
         }
       );
-
-      // Handle the response data
-      setPlotData(response.data);
-      console.log(response.data);
-      toast({
-        title: 'Success!!',
-        description: 'The Subscriber has been uploaded.',
-      });
+  
+      // Check if there is an error in the response
+      if (response.data.error) {
+        // If there's an error, display a destructive toast
+        console.error('Error fetching subscriber data:', response.data.error);
+        toast({
+          title: 'There was a problem.',
+          description: `${response.data.message}`,
+          variant: 'destructive',
+        });
+      } else {
+        // If there's no error, display a success toast
+        setPlotData(response.data);
+        console.log(response.data);
+        toast({
+          title: 'Success!!',
+          description: `${response.data.message}`,
+        });
+      }
     } catch (error) {
       console.error('Error fetching subscriber data:', error);
+      // Handle other errors as needed
       toast({
         title: 'There was a problem.',
-        description: 'There was an error uploading the subscriber details',
+        description: 'An unexpected error occurred.',
         variant: 'destructive',
       });
-      // Handle the error as needed
     } finally {
       // Stop loading
       setIsLoading(false);
     }
   };
+  
 
   const handleExportExcel = () => {
     // Replace this with your hardcoded data for two separate Excel files
@@ -196,7 +208,7 @@ function Ballot() {
                 </p>
               </div>
 
-              <Button onClick={handleExportExcel} className="w-full mt-4 mb-6">Download</Button>
+              <Button onClick={handleExportExcel} className="w-full mt-4 mb-6 bg-[#2187C0]">Download</Button>
             </div>
           </div>
 
@@ -245,7 +257,7 @@ function Ballot() {
 
             <Sheet>
               <SheetTrigger asChild>
-                <Button className="w-full mt-4 mb-6">Open</Button>
+                <Button className="w-full mt-4 mb-6 bg-[#2187C0]">Open</Button>
               </SheetTrigger>
               <SheetContent>
                 <SheetHeader>
@@ -269,7 +281,7 @@ function Ballot() {
                 </div>
                 <SheetFooter>
                   <SheetClose asChild>
-                  <Button onClick={handleSubmit} className="mb-10" disabled={isLoading}>
+                  <Button onClick={handleSubmit} className="mb-10 bg-[#2187C0]" disabled={isLoading}>
                   {isLoading ? (
                   <>
                     <Loader2 className="mr-2 h-4 w-4 animate-spin" />
@@ -310,7 +322,7 @@ function Ballot() {
 
 <Sheet>
               <SheetTrigger asChild>
-                <Button className="w-full mt-4 mb-6">Open</Button>
+                <Button className="w-full mt-4 mb-6 bg-[#2187C0]">Open</Button>
               </SheetTrigger>
               <SheetContent>
                 <SheetHeader>
@@ -334,7 +346,7 @@ function Ballot() {
                 </div>
                 <SheetFooter>
                   <SheetClose asChild>
-                  <Button onClick={handleSubscriberSubmit} className="mb-10" disabled={isLoading}>
+                  <Button onClick={handleSubscriberSubmit} className="mb-10 bg-[#2187C0]" disabled={isLoading}>
                   {isLoading ? (
                   <>
                     <Loader2 className="mr-2 h-4 w-4 animate-spin" />
@@ -374,7 +386,7 @@ function Ballot() {
               </div>
 
               <Link className={buttonVariants({
-                className: 'w-full mt-4 mb-6'
+                className: 'w-full mt-4 mb-6 bg-[#2187C0]'
               })} href={`/draws/${ballotId}`}>Go to Draws</Link>
             </div>
           </div>
@@ -426,8 +438,8 @@ function Ballot() {
               })} href={`/subscribers/${ballotId}`}>See all Subscribers</Link>
             </div>
           </div> */}
-          <Link href={`/plots/${ballotId}`} ><Button>See all Plots</Button></Link>
-          <Link href={`/subscribers/${ballotId}`} ><Button>See all Subscribers</Button></Link>
+          <Link href={`/plots/${ballotId}`} className='mb-5' ><Button className="bg-[#2187C0]">See all Plots</Button></Link>
+          <Link href={`/subscribers/${ballotId}`} className='mb-5' ><Button className="bg-[#2187C0]">See all Subscribers</Button></Link>
         </div>
 
       </div>

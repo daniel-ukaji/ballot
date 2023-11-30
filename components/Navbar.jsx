@@ -7,7 +7,8 @@ import { useAuth } from '../services/AuthContext';
 // import UserAccountNav from './UserAccountNav'
 import { Moon, Sun } from "lucide-react"
 import { useTheme } from "next-themes"
- 
+import logo from "@/public/logo.png"
+import Image from "next/image";
 
 function Navbar() {
   const { user, logout } = useAuth();
@@ -23,9 +24,10 @@ function Navbar() {
             {/* logo */}
             <Link href='/' className='flex gap-2 items-center'>
               {/* <Icons.logo className='h-8 w-8 sm:h-6 sm:w-6' /> */}
-              <p className=' text-zinc-700 text-sm font-medium'>
+              {/* <p className=' text-zinc-700 text-sm font-medium'>
                 CEMCS
-              </p>
+              </p> */}
+              <Image src={logo} alt="logo" className='w-12 h-12 object-contain'/>
             </Link>
 
             <div className='flex items-center space-x-8'>
@@ -33,7 +35,9 @@ function Navbar() {
                 {/* <Link href='/upload'>Upload</Link>
                 <Link href='/ballotresultspage'>Draw</Link> */}
                 {user ? (
-                <Button onClick={logout} >Log Out</Button>
+                <Button onClick={logout} className={buttonVariants({
+                  className: 'bg-[#2187C0]'
+                })} >Log Out</Button>
                 ) : (
                 <Link href='/signin' className={buttonVariants()} >Sign In</Link>
                 )}

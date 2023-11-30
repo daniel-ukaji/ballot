@@ -131,7 +131,7 @@ function Uploaded({ ballotId }) {
 
       <br /><br />
 
-      <Button onClick={submitDataToAPI} className="mb-10" disabled={isLoading}>
+      <Button onClick={submitDataToAPI} className="mb-10 bg-[#2187C0]" disabled={isLoading}>
         {isLoading ? (
           <>
             <Loader2 className="mr-2 h-4 w-4 animate-spin" />

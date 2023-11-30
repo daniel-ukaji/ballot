@@ -73,7 +73,7 @@ export default function Home() {
     };
 
     fetchData();
-  }, [user, userEmail, router]);
+  }, [ userEmail, userToken]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -124,7 +124,7 @@ export default function Home() {
         <div className='mb-5 flex justify-end'>
           <Dialog>
             <DialogTrigger asChild>
-              <Button className="flex items-center">Create Ballot <PlusIcon className='w-4 h-4 ml-2' /> </Button>
+              <Button className="flex items-center bg-[#2187C0]">Create Ballot <PlusIcon className='w-4 h-4 ml-2' /> </Button>
             </DialogTrigger>
             <DialogContent className="sm:max-w-[425px]">
               <DialogHeader>
@@ -148,7 +148,7 @@ export default function Home() {
                 </div>
               </div>
               <DialogFooter>
-                <Button onClick={handleSubmit} className="mb-10" disabled={isLoading}>
+                <Button onClick={handleSubmit} className="mb-10 bg-[#2187C0]" disabled={isLoading}>
                   {isLoading ? (
                     <>
                       <Loader2 className="mr-2 h-4 w-4 animate-spin" />
@@ -178,7 +178,7 @@ export default function Home() {
                   const ballotId = item.id; // Declare the variable here
                   return (
                     <p className='flex items-center justify-between font-bold' key={item.id}>
-                      {item.name} <Link href={`/ballot/${ballotId}`} ><Button className="mt-2">View</Button></Link>
+                      {item.name} <Link href={`/ballot/${ballotId}`} ><Button className="mt-2 bg-[#2187C0]">View</Button></Link>
                     </p>
                   );
                 })}

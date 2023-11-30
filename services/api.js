@@ -5,7 +5,8 @@ const API_BASE_URL = 'https://virtual.chevroncemcs.com';
 
 export async function fetchBallotData(email, userToken) {
   try {
-    const response = await axios.get(`${API_BASE_URL}/ballot/ballot`, {
+    const timestamp = Date.now(); // Cache-busting timestamp
+    const response = await axios.get(`${API_BASE_URL}/ballot/ballot?_=${timestamp}`, {
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${userToken}`, // Pass the userToken as an argument
