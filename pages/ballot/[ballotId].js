@@ -35,9 +35,11 @@ function Ballot() {
   
   const router = useRouter();
   const { ballotId } = router.query; // Retrieve the 'id' from the URL query parameters
+  const ballotName = router.query.name;
+
+  console.log('Ballot Name:', ballotName);
 
   console.log('Extracted ID:', ballotId); // Log the extracted ID to the console
-
 
   const userEmail = user?.email;
 
@@ -187,6 +189,7 @@ function Ballot() {
     <div>
       <Navbar />
       <div className='max-w-6xl mx-auto mt-20'>
+        <h1 className='text-center font-bold text-2xl'>{ballotName}</h1>
         {/* <h1 className='font-bold text-3xl md:text-4xl mb-5'>Upload bulk Document</h1> */}
 
         <div className='grid grid-cols-1 md:grid-cols-3 gap-y-4 md:gap-y-4 py-6 gap-x-8'>
@@ -387,7 +390,7 @@ function Ballot() {
 
               <Link className={buttonVariants({
                 className: 'w-full mt-4 mb-6 bg-[#2187C0]'
-              })} href={`/draws/${ballotId}`}>Go to Draws</Link>
+              })} href={`/draws/${ballotId}?name=${encodeURIComponent(ballotName)}`}>Go to Draws</Link>
             </div>
           </div>
           {/* <Link href={`/draws/${ballotId}`} ><Button>Go to Draws</Button></Link> */}
@@ -438,8 +441,8 @@ function Ballot() {
               })} href={`/subscribers/${ballotId}`}>See all Subscribers</Link>
             </div>
           </div> */}
-          <Link href={`/plots/${ballotId}`} className='mb-5' ><Button className="bg-[#2187C0]">See all Plots</Button></Link>
-          <Link href={`/subscribers/${ballotId}`} className='mb-5' ><Button className="bg-[#2187C0]">See all Subscribers</Button></Link>
+          <Link href={`/plots/${ballotId}?name=${encodeURIComponent(ballotName)}`} className='mb-5' ><Button className="bg-[#2187C0]">See all Plots</Button></Link>
+          <Link href={`/subscribers/${ballotId}?name=${encodeURIComponent(ballotName)}`} className='mb-5' ><Button className="bg-[#2187C0]">See all Subscribers</Button></Link>
         </div>
 
       </div>

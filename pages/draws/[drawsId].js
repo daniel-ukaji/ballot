@@ -29,6 +29,10 @@ const Draws = () => {
   const router = useRouter();
   const { drawsId } = router.query;
 
+  const ballotName = router.query.name;
+
+  console.log('Draw Name:', ballotName);
+
   const userEmail = user?.email;
 
   // Calculate page count based on items per page
@@ -263,7 +267,9 @@ const Draws = () => {
       )}
       <Navbar />
       <div className="max-w-6xl mx-auto">
-        <h1 className="text-3xl font-semibold mb-4 mt-20">Ballot Result</h1>
+        <div className="">
+          <h1 className="text-3xl font-semibold mb-4 mt-20">Ballot Result: {ballotName}</h1>
+        </div>
 
         <div className="flex justify-between mb-5">
           <Button className="bg-[#2187C0]" onClick={fetchDataWithDelay} disabled={isFetching || isLoading}>

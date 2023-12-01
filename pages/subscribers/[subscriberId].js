@@ -16,6 +16,10 @@ function Subscribers() {
   const router = useRouter();
   const { subscriberId } = router.query;
 
+  const ballotName = router.query.name;
+
+  console.log('Ballot Name:', ballotName);
+
   const userEmail = user?.email;
 
   const userToken = user?.token;
@@ -106,7 +110,7 @@ function Subscribers() {
       <Navbar />
       <div className="max-w-6xl mx-auto mt-20 mb-10">
         <div className="flex justify-between items-center mb-2">
-          <h1 className="text-3xl font-semibold mb-4">Subscribers</h1>
+          <h1 className="text-3xl font-semibold mb-4">Subscribers: {ballotName}</h1>
           <Button
           onClick={handleDelete}
           className="bg-[#2187C0]"

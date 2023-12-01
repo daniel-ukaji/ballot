@@ -16,6 +16,10 @@ function Plots() {
   const router = useRouter();
   const { plotId } = router.query;
 
+  const ballotName = router.query.name;
+
+  console.log('Plot Name:', ballotName);
+
   const userToken = user?.token;
   const userEmail = user?.email;
 
@@ -105,7 +109,7 @@ function Plots() {
       <Navbar />
       <div className="max-w-6xl mx-auto mt-20 mb-10">
         <div className="flex justify-between items-center mb-2">
-          <h1 className="text-3xl font-semibold mb-4">Plots</h1>
+          <h1 className="text-3xl font-semibold mb-4">Plots: {ballotName}</h1>
           <Button
           onClick={handleDelete}
           className="bg-[#2187C0]"

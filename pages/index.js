@@ -178,7 +178,10 @@ export default function Home() {
                   const ballotId = item.id; // Declare the variable here
                   return (
                     <p className='flex items-center justify-between font-bold' key={item.id}>
-                      {item.name} <Link href={`/ballot/${ballotId}`} ><Button className="mt-2 bg-[#2187C0]">View</Button></Link>
+                      {item.name} <Link href={`/ballot/${ballotId}?name=${encodeURIComponent(item.name)}`}>
+                        <Button className="mt-2 bg-[#2187C0]">View</Button>
+                      </Link>
+
                     </p>
                   );
                 })}
